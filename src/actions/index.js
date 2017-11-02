@@ -1,4 +1,5 @@
 export const GET_CATEGORIES = 'GET_CATEGORIES'
+export const GET_POSTS = 'GET_POSTS'
 export const ERROR_RECEIVED = 'ERROR_RECEIVED'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
 
@@ -6,7 +7,6 @@ export const getCategoriesAsync = () => {
 	return (dispatch, getState, api) => {
 		api.getCategories().then(
 			response => {
-				console.log(response)
 				if (!response.ok) {
 					dispatch(
 						errorReceived(
@@ -29,10 +29,41 @@ export const getCategoriesAsync = () => {
 	}
 }
 
+export const getPostsAsync = () => {
+	return (dispatch, getState, api) => {
+		api.getPosts().then(
+			response => {
+				if (!response.ok) {
+					dispatch(
+						errorReceived(
+							`Unable to fetch posts (code: ${response.status}, message: ${response.statusText})`
+						)
+					)
+					setTimeout(() => dispatch(clearError()), 5000)
+					return
+				}
+				response.json().then(json => dispatch(getPosts(json)))
+			},
+			error => {
+				dispatch(
+					errorReceived(`Unable to fetch posts (message: ${error.message})`)
+				)
+			}
+		)
+	}
+}
+
 export const getCategories = categories => {
 	return {
 		type: GET_CATEGORIES,
 		categories,
+	}
+}
+
+export const getPosts = posts => {
+	return {
+		type: GET_POSTS,
+		posts,
 	}
 }
 

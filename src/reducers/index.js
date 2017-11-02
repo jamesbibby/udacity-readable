@@ -1,5 +1,10 @@
 import { combineReducers } from 'redux'
-import { GET_CATEGORIES, ERROR_RECEIVED, CLEAR_ERROR } from '../actions'
+import {
+	GET_CATEGORIES,
+	GET_POSTS,
+	ERROR_RECEIVED,
+	CLEAR_ERROR,
+} from '../actions'
 
 const initialMessageBoardState = {
 	growler: null,
@@ -36,6 +41,11 @@ const messageBoard = (state = initialMessageBoardState, action) => {
 			return {
 				...state,
 				categories: action.categories,
+			}
+		case GET_POSTS:
+			return {
+				...state,
+				posts: action.posts,
 			}
 		case ERROR_RECEIVED:
 			return {

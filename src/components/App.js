@@ -1,27 +1,47 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { getCategoriesAsync, clearError } from '../actions'
+import { getCategoriesAsync, getPostsAsync, clearError } from '../actions'
 import CategoryList from './CategoryList'
+import FilteredPostList from './FilteredPostList'
 import Close from 'react-icons/lib/fa/close'
+import PostList from './PostList'
+import Promise from 'bluebird'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 class App extends Component {
 	componentDidMount() {
-		this.props.getCategories()
+		Promise.join(
+			[this.props.getCategories(), this.props.getPosts()],
+			(categories, posts) => {
+				console.log({ categories, posts })
+			}
+		)
 	}
 
 	render() {
+		const { categories, clearError, errorMessage } = this.props
 		return (
-			<div className="App">
-				{this.props.errorMessage && (
-					<div className="errorbanner">
-						{this.props.errorMessage}
-						<span className="flash-icon-close">
-							<Close onClick={this.props.clearError} />
-						</span>
+			<Router>
+				<div className="App">
+					<div className="header">Readable</div>
+					{errorMessage && (
+						<div className="errorbanner">
+							{errorMessage}
+							<span className="flash-icon-close">
+								<Close onClick={clearError} />
+							</span>
+						</div>
+					)}
+					<CategoryList categories={categories} allCategoryName="All" />
+					<div>
+						<Route exact path="/" component={PostList} />
+						<Route
+							path="/categories/:categoryId"
+							component={FilteredPostList}
+						/>
 					</div>
-				)}
-				<CategoryList categories={this.props.categories} />
-			</div>
+				</div>
+			</Router>
 		)
 	}
 }
@@ -34,6 +54,7 @@ function mapDispatchToProps(dispatch) {
 	return {
 		clearError: () => dispatch(clearError()),
 		getCategories: () => dispatch(getCategoriesAsync()),
+		getPosts: () => dispatch(getPostsAsync()),
 	}
 }
 
