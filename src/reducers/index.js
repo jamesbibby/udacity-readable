@@ -2,37 +2,22 @@ import { combineReducers } from 'redux'
 import {
 	GET_CATEGORIES,
 	GET_POSTS,
+	UPDATE_POST_VOTESCORE,
+	UPDATE_COMMENT_VOTESCORE,
+	UPDATE_COMMENTS,
+	DELETE_COMMENT,
 	ERROR_RECEIVED,
 	CLEAR_ERROR,
+	EDIT_COMMENT,
+	UPDATE_COMMENT,
+	ADD_COMMENT,
 } from '../actions'
 
 const initialMessageBoardState = {
 	growler: null,
 	categories: [],
-	posts: [
-		{
-			id: '8xf0y6ziyjabvozdd253nd',
-			timestamp: 1467166872634,
-			title: 'Udacity is the best place to learn React',
-			body: 'Everyone says so after all.',
-			author: 'thingtwo',
-			category: 'react',
-			voteScore: 6,
-			deleted: false,
-			commentCount: 2,
-		},
-		{
-			id: '6ni6ok3ym7mf1p33lnez',
-			timestamp: 1468479767190,
-			title: 'Learn Redux in 10 minutes!',
-			body: 'Just kidding. It takes more than 10 minutes to learn technology.',
-			author: 'thingone',
-			category: 'redux',
-			voteScore: -5,
-			deleted: false,
-			commentCount: 0,
-		},
-	],
+	posts: [],
+	comments: {},
 }
 
 const messageBoard = (state = initialMessageBoardState, action) => {
@@ -46,6 +31,74 @@ const messageBoard = (state = initialMessageBoardState, action) => {
 			return {
 				...state,
 				posts: action.posts,
+			}
+		case UPDATE_COMMENTS:
+			return {
+				...state,
+				comments: { ...state.comments, [action.postId]: action.comments },
+			}
+		case EDIT_COMMENT:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					[action.postId]: state.comments[action.postId].map(
+						comment =>
+							comment.id === action.commentId
+								? { ...comment, editing: true }
+								: comment
+					),
+				},
+			}
+		case ADD_COMMENT:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					[action.postId]: [...state.comments[action.postId], action.comment],
+				},
+			}
+		case UPDATE_COMMENT:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					[action.postId]: state.comments[action.postId].map(
+						comment =>
+							comment.id === action.comment.id ? action.comment : comment
+					),
+				},
+			}
+		case DELETE_COMMENT:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					[action.postId]: state.comments[action.postId].filter(
+						comment => comment.id !== action.commentId
+					),
+				},
+			}
+		case UPDATE_POST_VOTESCORE:
+			return {
+				...state,
+				posts: state.posts.map(
+					post =>
+						action.post.id === post.id
+							? { ...post, voteScore: action.post.voteScore }
+							: post
+				),
+			}
+		case UPDATE_COMMENT_VOTESCORE:
+			return {
+				...state,
+				comments: {
+					...state.comments,
+					[action.postId]: state.comments[action.postId].map(
+						comment =>
+							comment.id === action.comment.id ? action.comment : comment
+					),
+				},
 			}
 		case ERROR_RECEIVED:
 			return {

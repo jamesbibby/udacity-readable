@@ -6,7 +6,7 @@ const PostList = props => {
 	return (
 		<ul>
 			{props.posts &&
-				props.posts.map(post => {
+				props.posts.sort((a, b) => b.voteScore - a.voteScore).map(post => {
 					return (
 						<li key={post.id}>
 							<Link to={`/posts/${post.id}`}>{post.title}</Link>

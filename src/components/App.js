@@ -5,6 +5,7 @@ import CategoryList from './CategoryList'
 import FilteredPostList from './FilteredPostList'
 import Close from 'react-icons/lib/fa/close'
 import PostList from './PostList'
+import Post from './Post'
 import Promise from 'bluebird'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
@@ -12,9 +13,7 @@ class App extends Component {
 	componentDidMount() {
 		Promise.join(
 			[this.props.getCategories(), this.props.getPosts()],
-			(categories, posts) => {
-				console.log({ categories, posts })
-			}
+			(categories, posts) => {}
 		)
 	}
 
@@ -39,6 +38,7 @@ class App extends Component {
 							path="/categories/:categoryId"
 							component={FilteredPostList}
 						/>
+						<Route path="/posts/:postId" component={Post} />
 					</div>
 				</div>
 			</Router>
