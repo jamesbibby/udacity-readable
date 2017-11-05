@@ -6,14 +6,15 @@ body {
 
 .categoryMenu {
 	padding-bottom: 1em;
+	display: flex;
 }
 
 .logo svg {
 	width: 2em;
 	height: auto;
 }
+
 .errorbanner {
-	width: 100%;
 	background-color: red;
 	color: white;
 	text-align: center;

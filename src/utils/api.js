@@ -9,67 +9,11 @@ const HEADERS = {
 	'Content-Type': 'application/json',
 }
 
-const modifyPostVoteScore = (postId, modification) => {
-	return modifyVoteScore(postId, modification, 'posts')
-}
-
-const modifyCommentVoteScore = (postId, modification) => {
-	return modifyVoteScore(postId, modification, 'comments')
-}
-
-const modifyVoteScore = (id, modification, entity) => {
-	return axios({
-		url: `${ENDPOINT}/${entity}/${id}`,
-		method: 'POST',
-		headers: HEADERS,
-		data: { option: modification },
-	})
-}
-
-const deleteComment = commentId =>
-	axios({
-		url: `${ENDPOINT}/comments/${commentId}`,
-		method: 'DELETE',
-		headers: HEADERS,
-	})
-
-const updateComment = (commentId, body) => {
-	console.log(commentId, body)
-	return axios({
-		url: `${ENDPOINT}/comments/${commentId}`,
-		method: 'PUT',
-		headers: HEADERS,
-		data: {
-			timestamp: Date.now(),
-			body,
-		},
-	})
-}
-
-const addComment = (postId, body, author) =>
-	axios({
-		url: `${ENDPOINT}/comments`,
-		method: 'POST',
-		headers: HEADERS,
-		data: {
-			id: uuid(),
-			timestamp: Date.now(),
-			body,
-			author,
-			parentId: postId,
-		},
-	})
-
-const getComments = postId =>
-	axios({
-		url: `${ENDPOINT}/posts/${postId}/comments`,
-		method: 'GET',
-		headers: HEADERS,
-	})
-
+// Category functions
 const getCategories = () =>
 	axios({ url: `${ENDPOINT}/categories`, method: 'GET', headers: HEADERS })
 
+// Post functions
 const getPosts = () =>
 	axios({ url: `${ENDPOINT}/posts`, method: 'GET', headers: HEADERS })
 
@@ -88,14 +32,94 @@ const addPost = (title, author, body, category) =>
 		},
 	})
 
+const updatePost = (postId, title, body) =>
+	axios({
+		url: `${ENDPOINT}/posts/${postId}`,
+		method: 'PUT',
+		headers: HEADERS,
+		data: {
+			title,
+			body,
+		},
+	})
+
+const deletePost = postId =>
+	axios({
+		url: `${ENDPOINT}/posts/${postId}`,
+		method: 'DELETE',
+		headers: HEADERS,
+	})
+
+const modifyPostVoteScore = (postId, modification) => {
+	return modifyVoteScore(postId, modification, 'posts')
+}
+
+// Comment functions
+const getComments = postId =>
+	axios({
+		url: `${ENDPOINT}/posts/${postId}/comments`,
+		method: 'GET',
+		headers: HEADERS,
+	})
+
+const addComment = (postId, body, author) =>
+	axios({
+		url: `${ENDPOINT}/comments`,
+		method: 'POST',
+		headers: HEADERS,
+		data: {
+			id: uuid(),
+			timestamp: Date.now(),
+			body,
+			author,
+			parentId: postId,
+		},
+	})
+
+const updateComment = (commentId, body) => {
+	console.log(commentId, body)
+	return axios({
+		url: `${ENDPOINT}/comments/${commentId}`,
+		method: 'PUT',
+		headers: HEADERS,
+		data: {
+			timestamp: Date.now(),
+			body,
+		},
+	})
+}
+
+const deleteComment = commentId =>
+	axios({
+		url: `${ENDPOINT}/comments/${commentId}`,
+		method: 'DELETE',
+		headers: HEADERS,
+	})
+
+const modifyCommentVoteScore = (postId, modification) => {
+	return modifyVoteScore(postId, modification, 'comments')
+}
+
+// Private function to consolidate voting calls
+const modifyVoteScore = (id, modification, entity) => {
+	return axios({
+		url: `${ENDPOINT}/${entity}/${id}`,
+		method: 'POST',
+		headers: HEADERS,
+		data: { option: modification },
+	})
+}
+
 export default {
-	modifyPostVoteScore,
-	modifyCommentVoteScore,
 	getCategories,
 	getPosts,
-	getComments,
-	deleteComment,
-	updateComment,
-	addComment,
 	addPost,
+	updatePost,
+	deletePost,
+	modifyPostVoteScore,
+	getComments,
+	addComment,
+	updateComment,
+	deleteComment,
+	modifyCommentVoteScore,
 }

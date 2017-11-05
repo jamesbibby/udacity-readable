@@ -19,10 +19,31 @@ class App extends Component {
 	}
 
 	render() {
-		const { clearError, errorMessage } = this.props
+		const { clearAllErrors, errors } = this.props
 		return (
 			<Router>
 				<div className="App">
+					{errors &&
+						errors.length > 0 && (
+							<div
+								className="errorbanner"
+								style={{
+									display: 'flex',
+									'justify-content': 'space-between',
+								}}
+							>
+								<div />
+								<div style={{ display: 'block' }}>
+									{errors.map((e, ix) => {
+										console.log(e)
+										return <div>{e.message}</div>
+									})}
+								</div>
+								<span className="flash-icon-close">
+									<Close onClick={clearAllErrors} />
+								</span>
+							</div>
+						)}
 					<div className="header">
 						<div className="logo">
 							<Link to="/">
@@ -35,15 +56,6 @@ class App extends Component {
 							<Route path="/categories/:categoryId" component={CategoryList} />
 						</div>
 					</div>
-					{errorMessage && (
-						<div className="errorbanner">
-							{errorMessage}
-							<span className="flash-icon-close">
-								<Close onClick={clearError} />
-							</span>
-						</div>
-					)}
-
 					<div>
 						<Route exact path="/" component={PostList} />
 						<Route
@@ -59,7 +71,7 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
-	return state.messageBoard
+	return { ...state.messageBoard, ...state.errors }
 }
 
 function mapDispatchToProps(dispatch) {

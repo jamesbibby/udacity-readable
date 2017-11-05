@@ -23,11 +23,15 @@ button.currentSort {
 	font-weight: bold;
 }
 
+div.postListEntry:first-child {
+	border-top: 1px solid;
+}
+
 div.postListEntry {
 	margin: 0;
-	margin-bottom: 8px;
-	padding-left: 3px;
+	padding: 8px 4px;
 	display: flex;
+	border-bottom: 1px solid;
 }
 
 div.newPostForm {

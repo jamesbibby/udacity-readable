@@ -76,35 +76,39 @@ class PostList extends Component {
 							</button>
 						</div>
 					</div>
-					{posts &&
-						posts
-							.sort((a, b) => b[this.state.sortOrder] - a[this.state.sortOrder])
-							.map((post, ix) => {
-								return (
-									<div key={post.id} className="postListEntry">
-										<span className="rank">{ix + 1}</span>
-										<VoteScore
-											className="voteCol"
-											entityId={post.id}
-											voteScore={post.voteScore}
-											modifyVoteScore={modifyPostVoteScore}
-										/>
-										<div className="mainPost">
-											<div className="postListTitle">
-												<Link to={`/posts/${post.id}`}>{post.title}</Link>
-											</div>
-											<div className="postListBody">{post.body}</div>
-											<div className="postListAuthor">
-												submitted by ({post.author}) at{' '}
-												{new Date(post.timestamp).toLocaleString()}
-											</div>
-											<div className="postListComments">
-												{post.commentCount} comments
+					<div className="mainPostList">
+						{posts &&
+							posts
+								.sort(
+									(a, b) => b[this.state.sortOrder] - a[this.state.sortOrder]
+								)
+								.map((post, ix) => {
+									return (
+										<div key={post.id} className="postListEntry">
+											<span className="rank">{ix + 1}</span>
+											<VoteScore
+												className="voteCol"
+												entityId={post.id}
+												voteScore={post.voteScore}
+												modifyVoteScore={modifyPostVoteScore}
+											/>
+											<div className="mainPost">
+												<div className="postListTitle">
+													<Link to={`/posts/${post.id}`}>{post.title}</Link>
+												</div>
+												<div className="postListBody">{post.body}</div>
+												<div className="postListAuthor">
+													submitted by ({post.author}) at{' '}
+													{new Date(post.timestamp).toLocaleString()}
+												</div>
+												<div className="postListComments">
+													{post.commentCount} comments
+												</div>
 											</div>
 										</div>
-									</div>
-								)
-							})}
+									)
+								})}
+					</div>
 				</div>
 			</div>
 		)
