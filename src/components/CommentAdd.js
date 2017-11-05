@@ -17,7 +17,7 @@ class Comment extends Component {
 	}
 
 	handleSubmit(event) {
-		const { addComment, postId, comment } = this.props
+		const { addComment, postId } = this.props
 		addComment(postId, this.state.body, this.state.author)
 	}
 

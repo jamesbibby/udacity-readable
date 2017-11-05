@@ -1,22 +1,33 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { withRouter } from 'react-router'
+import './CategoryList.css'
 
 const CategoryList = props => {
 	return (
-		<ul>
-			<li>
-				<Link to="/">{props.allCategoryName}</Link>
-			</li>
+		<div className="tab">
+			<button
+				className={`tablinks ${!props.match.params.categoryId ? 'active' : ''}`}
+				onClick={() => props.history.push('/')}
+			>
+				All
+			</button>
 			{props.categories &&
 				props.categories.map(category => {
 					return (
-						<li key={category.path}>
-							<Link to={`/categories/${category.name}`}>{category.name}</Link>
-						</li>
+						<button
+							key={category.path}
+							className={`tablinks ${props.match.params.categoryId ===
+							category.path
+								? 'active'
+								: ''}`}
+							onClick={() => props.history.push(`/categories/${category.path}`)}
+						>
+							{category.name}
+						</button>
 					)
 				})}
-		</ul>
+		</div>
 	)
 }
 
@@ -24,4 +35,4 @@ function mapStateToProps(state) {
 	return { categories: state.messageBoard.categories }
 }
 
-export default connect(mapStateToProps)(CategoryList)
+export default withRouter(connect(mapStateToProps)(CategoryList))

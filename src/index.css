@@ -4,6 +4,14 @@ body {
 	font-family: sans-serif;
 }
 
+.categoryMenu {
+	padding-bottom: 1em;
+}
+
+.logo svg {
+	width: 2em;
+	height: auto;
+}
 .errorbanner {
 	width: 100%;
 	background-color: red;
@@ -11,6 +19,7 @@ body {
 	text-align: center;
 	padding: 1em;
 }
+
 .flash-icon-close {
 	position: absolute;
 	top: 0;

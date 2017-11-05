@@ -4,10 +4,11 @@ import { getCategoriesAsync, getPostsAsync, clearError } from '../actions'
 import CategoryList from './CategoryList'
 import FilteredPostList from './FilteredPostList'
 import Close from 'react-icons/lib/fa/close'
+import Book from 'react-icons/lib/fa/book'
 import PostList from './PostList'
 import Post from './Post'
 import Promise from 'bluebird'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
 
 class App extends Component {
 	componentDidMount() {
@@ -18,11 +19,22 @@ class App extends Component {
 	}
 
 	render() {
-		const { categories, clearError, errorMessage } = this.props
+		const { clearError, errorMessage } = this.props
 		return (
 			<Router>
 				<div className="App">
-					<div className="header">Readable</div>
+					<div className="header">
+						<div className="logo">
+							<Link to="/">
+								<Book style={{ float: 'left' }} />
+								<h1>Readable</h1>
+							</Link>
+						</div>
+						<div className="categoryMenu">
+							<Route exact path="/" component={CategoryList} />
+							<Route path="/categories/:categoryId" component={CategoryList} />
+						</div>
+					</div>
 					{errorMessage && (
 						<div className="errorbanner">
 							{errorMessage}
@@ -31,7 +43,7 @@ class App extends Component {
 							</span>
 						</div>
 					)}
-					<CategoryList categories={categories} allCategoryName="All" />
+
 					<div>
 						<Route exact path="/" component={PostList} />
 						<Route

@@ -11,6 +11,7 @@ import {
 	EDIT_COMMENT,
 	UPDATE_COMMENT,
 	ADD_COMMENT,
+	ADD_POST,
 } from '../actions'
 
 const initialMessageBoardState = {
@@ -57,6 +58,11 @@ const messageBoard = (state = initialMessageBoardState, action) => {
 					...state.comments,
 					[action.postId]: [...state.comments[action.postId], action.comment],
 				},
+			}
+		case ADD_POST:
+			return {
+				...state,
+				posts: [...state.posts, action.post],
 			}
 		case UPDATE_COMMENT:
 			return {

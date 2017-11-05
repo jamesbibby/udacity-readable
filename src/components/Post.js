@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Plus from 'react-icons/lib/fa/plus'
-import Minus from 'react-icons/lib/fa/minus'
-import Close from 'react-icons/lib/fa/close'
 import Comment from './Comment'
 import CommentEdit from './CommentEdit'
 import CommentAdd from './CommentAdd'
+import VoteScore from './VoteScore'
+import Close from 'react-icons/lib/fa/close'
+import Plus from 'react-icons/lib/fa/plus'
 
 import {
 	modifyPostVoteScoreAsync,
@@ -54,14 +54,12 @@ class Post extends Component {
 
 		return post ? (
 			<div className="postDetail">
-				<div className="postVoteScore">
-					<Plus onClick={() => modifyPostVoteScore(post.id, 'upVote')} />
-					{post.voteScore < 0 ? 0 : post.voteScore}
-					<Minus
-						onClick={() =>
-							post.voteScore > 0 && modifyPostVoteScore(post.id, 'downVote')}
-					/>
-				</div>
+				<VoteScore
+					className="postVoteScore"
+					entityId={post.id}
+					voteScore={post.voteScore}
+					modifyVoteScore={modifyPostVoteScore}
+				/>
 				<div className="postTitle">
 					<h2>{post.title}</h2>
 					<h3>{post.author}</h3>
@@ -99,7 +97,8 @@ class Post extends Component {
 										<Comment
 											postId={post.id}
 											comment={comment}
-											modifyCommentVoteScore={modifyCommentVoteScore}
+											modifyCommentVoteScore={(commentId, body) =>
+												modifyCommentVoteScore(post.id, commentId, body)}
 											editComment={editComment}
 											deleteComment={deleteComment}
 										/>

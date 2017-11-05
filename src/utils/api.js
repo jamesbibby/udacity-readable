@@ -73,6 +73,21 @@ const getCategories = () =>
 const getPosts = () =>
 	axios({ url: `${ENDPOINT}/posts`, method: 'GET', headers: HEADERS })
 
+const addPost = (title, author, body, category) =>
+	axios({
+		url: `${ENDPOINT}/posts`,
+		method: 'POST',
+		headers: HEADERS,
+		data: {
+			id: uuid(),
+			timestamp: Date.now(),
+			title,
+			body,
+			author,
+			category,
+		},
+	})
+
 export default {
 	modifyPostVoteScore,
 	modifyCommentVoteScore,
@@ -82,4 +97,5 @@ export default {
 	deleteComment,
 	updateComment,
 	addComment,
+	addPost,
 }

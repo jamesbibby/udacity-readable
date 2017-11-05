@@ -9,6 +9,7 @@ export const ADD_COMMENT = 'ADD_COMMENT'
 export const DELETE_COMMENT = 'DELETE_COMMENT'
 export const ERROR_RECEIVED = 'ERROR_RECEIVED'
 export const CLEAR_ERROR = 'CLEAR_ERROR'
+export const ADD_POST = 'ADD_POST'
 
 export const getCommentsAsync = postId => {
 	return (dispatch, getState, api) => {
@@ -82,6 +83,30 @@ export const addCommentAsync = (postId, body, author) => {
 					errorReceived(
 						`Unable to add comment for post with id [${postId}] (message: ${error.message})`
 					)
+				)
+			}
+		)
+	}
+}
+
+export const addPostAsync = (title, author, body, category) => {
+	return (dispatch, getState, api) => {
+		api.addPost(title, author, body, category).then(
+			response => {
+				if (response.status === 200 && response.data) {
+					dispatch(addPost(response.data))
+					return
+				}
+				dispatch(
+					errorReceived(
+						`Unable to add a post (code: ${response.status}, message: ${response.statusText})`
+					)
+				)
+				setTimeout(() => dispatch(clearError()), 5000)
+			},
+			error => {
+				dispatch(
+					errorReceived(`Unable to add a post (message: ${error.message})`)
 				)
 			}
 		)
@@ -250,6 +275,13 @@ export const addComment = (postId, comment) => {
 		type: ADD_COMMENT,
 		postId,
 		comment,
+	}
+}
+
+export const addPost = post => {
+	return {
+		type: ADD_POST,
+		post,
 	}
 }
 
