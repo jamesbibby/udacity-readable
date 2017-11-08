@@ -74,11 +74,12 @@ export const getComments = (postId, comments) => {
 	}
 }
 
-export const editComment = (postId, commentId) => {
+export const editComment = (postId, commentId, editing) => {
 	return {
 		type: EDIT_COMMENT,
 		postId,
 		commentId,
+		editing,
 	}
 }
 
@@ -96,11 +97,11 @@ export const updateComment = comment => {
 	}
 }
 
-export const deleteComment = (postId, commentId) => {
+export const deleteComment = (postId, comment) => {
 	return {
 		type: DELETE_COMMENT,
 		postId,
-		commentId,
+		commentId: comment.id,
 	}
 }
 

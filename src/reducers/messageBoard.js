@@ -72,7 +72,7 @@ export const messageBoard = (state = initialMessageBoardState, action) => {
 					[action.postId]: state.comments[action.postId].map(
 						comment =>
 							comment.id === action.commentId
-								? { ...comment, editing: true }
+								? { ...comment, editing: action.editing }
 								: comment
 					),
 				},
@@ -104,6 +104,13 @@ export const messageBoard = (state = initialMessageBoardState, action) => {
 		case DELETE_COMMENT:
 			return {
 				...state,
+				posts: state.posts.map(post => ({
+					...post,
+					commentCount:
+						post.id === action.postId
+							? post.commentCount - 1
+							: post.commentCount,
+				})),
 				comments: {
 					...state.comments,
 					[action.postId]: state.comments[action.postId].filter(

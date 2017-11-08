@@ -1,112 +1,52 @@
 import React, { Component } from 'react'
 // import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
-import Comment from './Comment'
-import CommentEdit from './CommentEdit'
-import CommentAdd from './CommentAdd'
 import VoteScore from './VoteScore'
-import Close from 'react-icons/lib/fa/close'
-import Plus from 'react-icons/lib/fa/plus'
-
-import {
-	modifyPostVoteScoreAsync,
-	modifyCommentVoteScoreAsync,
-	getCommentsAsync,
-	deleteCommentAsync,
-	editComment,
-	saveCommentAsync,
-	addCommentAsync,
-} from '../actions'
+import CommentList from './CommentList'
+import { modifyPostVoteScoreAsync } from '../actions'
 
 class Post extends Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			showCreateComment: false,
-		}
-		this.showCreateComment = this.showCreateComment.bind(this)
-		this.hideCreateComment = this.hideCreateComment.bind(this)
-	}
-
-	showCreateComment() {
-		this.setState({ showCreateComment: true })
-	}
-
-	hideCreateComment() {
-		this.setState({ showCreateComment: false })
-	}
-
-	componentWillMount() {
-		this.props.getComments(this.props.match.params.postId)
-	}
-
 	render() {
-		const {
-			post,
-			comments,
-			modifyPostVoteScore,
-			modifyCommentVoteScore,
-			editComment,
-			saveComment,
-			deleteComment,
-			addComment,
-		} = this.props
+		const { post, modifyPostVoteScore } = this.props
 
 		return post ? (
 			<div className="postDetail">
-				<VoteScore
-					className="postVoteScore"
-					entityId={post.id}
-					voteScore={post.voteScore}
-					modifyVoteScore={modifyPostVoteScore}
-				/>
-				<div className="postTitle">
-					<h2>{post.title}</h2>
-					<h3>{post.author}</h3>
-					<p>{new Date(post.timestamp).toUTCString()}</p>
-					<p>{post.body}</p>
-				</div>
-				<div className="newComment">
-					<Plus onClick={this.showCreateComment} />
-					{this.state.showCreateComment && (
-						<div>
-							<CommentAdd
-								postId={post.id}
-								addComment={(postId, body, author) => {
-									this.hideCreateComment()
-									return addComment(postId, body, author)
-								}}
-							/>
-							<Close onClick={this.hideCreateComment} />
+				<div>Post:</div>
+				<div className="postDetailVoteScore" style={{ valign: 'middle' }}>
+					<VoteScore
+						className="voteCol"
+						entityId={post.id}
+						voteScore={post.voteScore}
+						modifyVoteScore={modifyPostVoteScore}
+					/>
+					<div
+						className="mainPost"
+						style={{
+							display: 'flex',
+							flexDirection: 'column',
+							flex: '1',
+						}}
+					>
+						<div
+							style={{
+								display: 'flex',
+								flexDirection: 'row',
+								justifyContent: 'space-between',
+							}}
+						>
+							<div className="postListTitle">{post.title}</div>
+							<div
+								className="postListAuthor"
+								style={{ color: 'grey', fontSize: 'small' }}
+							>
+								submitted by ({post.author}) at
+								{new Date(post.timestamp).toLocaleString()}
+							</div>
 						</div>
-					)}
+						<div className="postListBody">{post.body}</div>
+					</div>
 				</div>
-				<div className="postCommentList">
-					<ul>
-						{comments &&
-							comments.map(comment => (
-								<li key={comment.id}>
-									{comment.editing ? (
-										<CommentEdit
-											postId={post.id}
-											comment={comment}
-											modifyCommentVoteScore={modifyCommentVoteScore}
-											saveComment={saveComment}
-										/>
-									) : (
-										<Comment
-											postId={post.id}
-											comment={comment}
-											modifyCommentVoteScore={(commentId, body) =>
-												modifyCommentVoteScore(post.id, commentId, body)}
-											editComment={editComment}
-											deleteComment={deleteComment}
-										/>
-									)}
-								</li>
-							))}
-					</ul>
-				</div>
+				<CommentList post={post} />
 			</div>
 		) : null
 	}
@@ -114,28 +54,14 @@ class Post extends Component {
 
 function mapDispatchToProps(dispatch) {
 	return {
-		getComments: postId => {
-			dispatch(getCommentsAsync(postId))
-		},
-		deleteComment: (postId, commentId) =>
-			dispatch(deleteCommentAsync(postId, commentId)),
-		editComment: (postId, commentId) =>
-			dispatch(editComment(postId, commentId)),
-		saveComment: (postId, commentId, body) =>
-			dispatch(saveCommentAsync(postId, commentId, body)),
-		addComment: (postId, body, author) =>
-			dispatch(addCommentAsync(postId, body, author)),
 		modifyPostVoteScore: (postId, modification) =>
 			dispatch(modifyPostVoteScoreAsync(postId, modification)),
-		modifyCommentVoteScore: (postId, commentId, modification) =>
-			dispatch(modifyCommentVoteScoreAsync(postId, commentId, modification)),
 	}
 }
 function mapStateToProps(state, props) {
 	const { postId } = props.match.params
 	return {
 		post: state.messageBoard.posts.find(post => post.id === postId),
-		comments: state.messageBoard.comments[postId],
 	}
 }
 

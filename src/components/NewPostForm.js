@@ -116,7 +116,7 @@ class NewPostForm extends Component {
 					)}
 				</div>
 				<span className="flash-icon-close">
-					<Close onClick={hideNewPost} />
+					<Close className="icon" onClick={hideNewPost} />
 				</span>
 			</div>
 		)

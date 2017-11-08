@@ -4,6 +4,10 @@ body {
 	font-family: sans-serif;
 }
 
+div {
+	border: 0px solid red;
+}
+
 .categoryMenu {
 	padding-bottom: 1em;
 	display: flex;
@@ -12,6 +16,7 @@ body {
 .logo svg {
 	width: 2em;
 	height: auto;
+	float: left;
 }
 
 .errorbanner {
@@ -19,6 +24,12 @@ body {
 	color: white;
 	text-align: center;
 	padding: 1em;
+	display: flex;
+	justify-content: space-between;
+}
+
+.errorlist {
+	display: block;
 }
 
 .flash-icon-close {
@@ -26,4 +37,76 @@ body {
 	top: 0;
 	right: 0;
 	transition: transform 500ms ease-in-out;
+}
+
+.commentBlock {
+	display: flex;
+	justify-content: space-between;
+	align-content: stretch;
+	flex: 1 100%;
+	border-bottom: 1px solid;
+	padding-bottom: 10px;
+}
+
+.commentBlock:first-child {
+	border-top: 1px solid;
+}
+
+.commentForm:first-child {
+	border-top: 1px solid;
+}
+
+.commentBody {
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+}
+
+.icon {
+	-webkit-user-select: none; /* webkit (safari, chrome) browsers */
+	-moz-user-select: none; /* mozilla browsers */
+	-khtml-user-select: none; /* webkit (konqueror) browsers */
+	-ms-user-select: none; /* IE10+ */
+}
+
+.postDetailVoteScore {
+	display: flex;
+}
+
+.postComments {
+	margin-top: 50px;
+}
+.postCommentsHeader {
+	display: flex;
+	justify-content: space-between;
+	background-color: lightgrey;
+	padding: 10px 0;
+}
+
+.postCommentList {
+	display: flex;
+	flex-direction: column;
+	margin: 20px 0;
+}
+
+.flex-outer li {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+}
+
+.flex-outer > li > label,
+.flex-outer li p {
+	flex: 1 0 120px;
+	max-width: 220px;
+	padding: 10px 0;
+}
+
+.flex-outer > li > label + * {
+	flex: 1 0 220px;
+}
+
+.commentForm {
+	padding-right: 100px;
+	border-bottom: 1px solid;
 }

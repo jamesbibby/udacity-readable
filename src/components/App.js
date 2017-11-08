@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { getCategoriesAsync, getPostsAsync, clearError } from '../actions'
 import CategoryList from './CategoryList'
-import FilteredPostList from './FilteredPostList'
 import Close from 'react-icons/lib/fa/close'
 import Book from 'react-icons/lib/fa/book'
 import PostList from './PostList'
@@ -25,29 +24,23 @@ class App extends Component {
 				<div className="App">
 					{errors &&
 						errors.length > 0 && (
-							<div
-								className="errorbanner"
-								style={{
-									display: 'flex',
-									'justify-content': 'space-between',
-								}}
-							>
+							<div className="errorbanner">
 								<div />
-								<div style={{ display: 'block' }}>
+								<div className="errorlist">
 									{errors.map((e, ix) => {
 										console.log(e)
 										return <div>{e.message}</div>
 									})}
 								</div>
 								<span className="flash-icon-close">
-									<Close onClick={clearAllErrors} />
+									<Close className="icon" onClick={clearAllErrors} />
 								</span>
 							</div>
 						)}
 					<div className="header">
 						<div className="logo">
 							<Link to="/">
-								<Book style={{ float: 'left' }} />
+								<Book className="icon" />
 								<h1>Readable</h1>
 							</Link>
 						</div>
@@ -58,10 +51,7 @@ class App extends Component {
 					</div>
 					<div>
 						<Route exact path="/" component={PostList} />
-						<Route
-							path="/categories/:categoryId"
-							component={FilteredPostList}
-						/>
+						<Route path="/categories/:categoryId" component={PostList} />
 						<Route path="/posts/:postId" component={Post} />
 					</div>
 				</div>

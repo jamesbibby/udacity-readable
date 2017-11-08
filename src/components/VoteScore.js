@@ -7,11 +7,15 @@ const VoteScore = props => {
 	return (
 		<div className={className}>
 			<div className="voteIcon">
-				<Plus onClick={() => modifyVoteScore(entityId, 'upVote')} />
+				<Plus
+					className="icon"
+					onClick={() => modifyVoteScore(entityId, 'upVote')}
+				/>
 			</div>
 			<div className="voteScore">{voteScore < 0 ? 0 : voteScore}</div>
 			<div className="voteIcon">
 				<Minus
+					className="icon"
 					onClick={() => voteScore > 0 && modifyVoteScore(entityId, 'downVote')}
 				/>
 			</div>

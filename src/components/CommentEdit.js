@@ -1,40 +1,75 @@
 import React, { Component } from 'react'
 import Check from 'react-icons/lib/fa/check'
+import Close from 'react-icons/lib/fa/close'
 
-class Comment extends Component {
+class CommentForm extends Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			body: props.comment.body,
+			author: '',
+			body: props.newComment ? '' : props.comment.body,
 		}
-		this.handleBodyChange = this.handleBodyChange.bind(this)
+
+		this.handleChange = this.handleChange.bind(this)
 		this.handleSubmit = this.handleSubmit.bind(this)
 	}
 
-	handleBodyChange(event) {
-		this.setState({ body: event.target.value })
+	handleChange(event) {
+		this.setState({ [event.target.name]: event.target.value })
 	}
 
 	handleSubmit(event) {
-		const { saveComment, postId, comment } = this.props
-		saveComment(postId, comment.id, this.state.body)
+		const { saveComment, addComment, postId, comment, newComment } = this.props
+		if (newComment) {
+			addComment(postId, this.state.body, this.state.author)
+		} else {
+			saveComment(postId, comment.id, this.state.body)
+		}
 	}
 
 	render() {
 		return (
-			<div className="commentBlock">
-				<label>
-					Body:
-					<input
-						type="text"
-						value={this.state.body}
-						onChange={this.handleBodyChange}
-					/>
-				</label>
-				<Check onClick={() => this.handleSubmit()} />
+			<div className="commentForm">
+				<ul className="flex-outer">
+					{this.props.newComment && (
+						<li>
+							<label htmlFor="author">Author: </label>
+							<input
+								type="text"
+								name="author"
+								value={this.state.author}
+								onChange={this.handleChange}
+							/>
+						</li>
+					)}
+					<li>
+						<label htmlFor="body" style={{ valign: 'top' }}>
+							Comment:
+						</label>
+						<textarea
+							name="body"
+							value={this.state.body}
+							onChange={this.handleChange}
+						/>
+					</li>
+					<li className="flex-final">
+						<p />
+						<Close
+							className="icon"
+							onClick={
+								this.props.newComment
+									? this.props.hideCreateComment
+									: this.props.cancelEditing
+							}
+						/>
+						<p>Cancel</p>
+						<Check className="icon" onClick={this.handleSubmit} />
+						<p>Save</p>
+					</li>
+				</ul>
 			</div>
 		)
 	}
 }
 
-export default Comment
+export default CommentForm

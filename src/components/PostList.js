@@ -5,6 +5,7 @@ import { modifyPostVoteScoreAsync, addPostAsync } from '../actions'
 import VoteScore from './VoteScore'
 import Plus from 'react-icons/lib/fa/plus'
 import NewPostForm from './NewPostForm'
+import SortList from './SortList'
 import './PostList.css'
 
 class PostList extends Component {
@@ -16,6 +17,8 @@ class PostList extends Component {
 		}
 		this.showNewPost = this.showNewPost.bind(this)
 		this.hideNewPost = this.hideNewPost.bind(this)
+		this.reSort = this.reSort.bind(this)
+		this.filteredPosts = this.filteredPosts.bind(this)
 	}
 
 	reSort(sortField) {
@@ -30,55 +33,32 @@ class PostList extends Component {
 		this.setState({ showNewPost: false })
 	}
 
+	filteredPosts() {
+		if (this.props.match.params.categoryId) {
+			return this.props.posts.filter(
+				post => post.category === this.props.match.params.categoryId
+			)
+		}
+		return this.props.posts
+	}
+
 	render() {
 		const { posts, modifyPostVoteScore, addPost } = this.props
 		return (
 			<div className="postList">
 				<div className="postListToolbar">
 					<div className="postListNewPost">
-						<Plus onClick={this.showNewPost} />Create New Post
+						<Plus className="icon" onClick={this.showNewPost} />Create New Post
 						{this.state.showNewPost && (
 							<NewPostForm hideNewPost={this.hideNewPost} addPost={addPost} />
 						)}
 					</div>
 				</div>
 				<div className="postListMain">
-					<div className="sortList">
-						<div>Order by:</div>
-						<div>
-							<button
-								className={
-									this.state.sortOrder === 'voteScore' && 'currentSort'
-								}
-								onClick={() => this.reSort('voteScore')}
-							>
-								Votes
-							</button>
-						</div>
-						<div>
-							<button
-								className={
-									this.state.sortOrder === 'timestamp' && 'currentSort'
-								}
-								onClick={() => this.reSort('timestamp')}
-							>
-								Recency
-							</button>
-						</div>
-						<div>
-							<button
-								className={
-									this.state.sortOrder === 'commentCount' && 'currentSort'
-								}
-								onClick={() => this.reSort('commentCount')}
-							>
-								Comments
-							</button>
-						</div>
-					</div>
+					<SortList sortOrder={this.state.sortOrder} reSort={this.reSort} />
 					<div className="mainPostList">
 						{posts &&
-							posts
+							this.filteredPosts()
 								.sort(
 									(a, b) => b[this.state.sortOrder] - a[this.state.sortOrder]
 								)
