@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { modifyPostVoteScoreAsync, addPostAsync } from '../actions'
 import VoteScore from './VoteScore'
 import Plus from 'react-icons/lib/fa/plus'
-import NewPostForm from './NewPostForm'
+import PostForm from './PostForm'
 import SortList from './SortList'
 import './PostList.css'
 
@@ -43,19 +43,25 @@ class PostList extends Component {
 	}
 
 	render() {
-		const { posts, modifyPostVoteScore, addPost } = this.props
+		const { posts, modifyPostVoteScore, addPost, categories } = this.props
 		return (
 			<div className="postList">
 				<div className="postListToolbar">
 					<div className="postListNewPost">
 						<Plus className="icon" onClick={this.showNewPost} />Create New Post
 						{this.state.showNewPost && (
-							<NewPostForm hideNewPost={this.hideNewPost} addPost={addPost} />
+							<PostForm
+								cancel={this.hideNewPost}
+								addPost={addPost}
+								categories={categories}
+								submitLabel="Create"
+								newPost={true}
+							/>
 						)}
 					</div>
+					<SortList sortOrder={this.state.sortOrder} reSort={this.reSort} />
 				</div>
 				<div className="postListMain">
-					<SortList sortOrder={this.state.sortOrder} reSort={this.reSort} />
 					<div className="mainPostList">
 						{posts &&
 							this.filteredPosts()
@@ -107,6 +113,7 @@ function mapDispatchToProps(dispatch) {
 function mapStateToProps(state) {
 	return {
 		posts: state.messageBoard.posts,
+		categories: state.messageBoard.categories,
 	}
 }
 

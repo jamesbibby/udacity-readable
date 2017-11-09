@@ -21,7 +21,6 @@ const Comment = props => (
 			voteScore={props.comment.voteScore}
 			modifyVoteScore={props.modifyCommentVoteScore}
 		/>
-
 		<div
 			className="commentBody"
 			style={{
@@ -30,12 +29,12 @@ const Comment = props => (
 				flex: '4 0px',
 			}}
 		>
-			<p>{props.comment.body}</p>
-			<p style={{ color: 'grey', fontSize: 'small', paddingRight: '10px' }}>
+			{props.comment.body}
+			<span style={{ color: 'grey', fontSize: 'small', paddingRight: '10px' }}>
 				{props.comment.author} at ({new Date(
 					props.comment.timestamp
 				).toLocaleString()})
-			</p>
+			</span>
 		</div>
 		<Pencil
 			className="icon"

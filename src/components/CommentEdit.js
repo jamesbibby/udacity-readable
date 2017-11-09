@@ -54,17 +54,25 @@ class CommentForm extends Component {
 					</li>
 					<li className="flex-final">
 						<p />
-						<Close
-							className="icon"
-							onClick={
-								this.props.newComment
-									? this.props.hideCreateComment
-									: this.props.cancelEditing
-							}
-						/>
-						<p>Cancel</p>
-						<Check className="icon" onClick={this.handleSubmit} />
-						<p>Save</p>
+						<p />
+						<div>
+							<button
+								onClick={
+									this.props.newComment
+										? this.props.hideCreateComment
+										: this.props.cancelEditing
+								}
+							>
+								<Close className="icon" />
+								Cancel
+							</button>
+						</div>
+						<div>
+							<button onClick={this.handleSubmit}>
+								<Check className="icon" />
+								Save
+							</button>
+						</div>
 					</li>
 				</ul>
 			</div>

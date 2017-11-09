@@ -28,7 +28,6 @@ class App extends Component {
 								<div />
 								<div className="errorlist">
 									{errors.map((e, ix) => {
-										console.log(e)
 										return <div>{e.message}</div>
 									})}
 								</div>

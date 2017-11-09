@@ -10,6 +10,7 @@ div.postListToolbar {
 
 div.postListNewPost {
 	margin: 0 0 10px 20px;
+	width: 60%;
 }
 
 div.sortList {
@@ -34,11 +35,11 @@ div.postListEntry {
 	border-bottom: 1px solid;
 }
 
-div.newPostForm {
-	border: 2px dashed;
-	padding: 10px;
+div.postForm {
+	border: 2px solid;
 	display: flex;
-	width: 100%;
+	width: 80%;
+	margin: 10px auto;
 }
 
 .flash-icon-close {
@@ -74,37 +75,6 @@ div.postListAuthor {
 }
 
 div.postListComments {
-	font-weight: bold;
-	color: #c3c3c3;
-}
-
-div.mainPost {
-	display: block;
-}
-
-div.voteCol {
-	width: 4ex;
-	font-weight: bold;
 	font-size: small;
-	float: left;
-	margin-right: 7px;
-	margin-left: 7px;
-	background: transparent;
-	overflow: hidden;
-}
-
-div.voteIcon {
-	height: 14px;
-	display: block;
-	margin: 2px 0 0 0;
-	cursor: pointer;
-	width: auto;
-	outline: none;
-	text-align: center;
-}
-
-div.voteScore {
-	margin: 2px 0 0 0;
-	display: block;
-	text-align: center;
+	color: #c6;
 }

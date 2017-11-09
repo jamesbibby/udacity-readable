@@ -47,7 +47,8 @@ export const messageBoard = (state = initialMessageBoardState, action) => {
 		case DELETE_POST:
 			return {
 				...state,
-				posts: state.posts.filter(post => post.id !== action.postId),
+				posts: state.posts.filter(post => post.id !== action.post.id),
+				comments: { ...state.comments, [action.post.id]: [] },
 			}
 		case UPDATE_POST_VOTESCORE:
 			return {
@@ -80,6 +81,12 @@ export const messageBoard = (state = initialMessageBoardState, action) => {
 		case ADD_COMMENT:
 			return {
 				...state,
+				posts: state.posts.map(
+					post =>
+						action.comment.parentId === post.id
+							? { ...post, commentCount: post.commentCount + 1 }
+							: post
+				),
 				comments: {
 					...state.comments,
 					[action.comment.parentId]: [

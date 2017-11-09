@@ -77,7 +77,6 @@ const addComment = (postId, body, author) =>
 	})
 
 const updateComment = (commentId, body) => {
-	console.log(commentId, body)
 	return axios({
 		url: `${ENDPOINT}/comments/${commentId}`,
 		method: 'PUT',

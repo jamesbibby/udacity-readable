@@ -23,6 +23,28 @@ export const addPostAsync = (title, author, body, category) => {
 	}
 }
 
+export const deletePostAsync = postId => {
+	return (dispatch, getState, api) => {
+		handleAsyncResponse(
+			dispatch,
+			api.deletePost(postId),
+			deletePost,
+			'delete post'
+		)
+	}
+}
+
+export const updatePostAsync = (postId, title, body) => {
+	return (dispatch, getState, api) => {
+		handleAsyncResponse(
+			dispatch,
+			api.updatePost(postId, title, body),
+			updatePost,
+			'update post'
+		)
+	}
+}
+
 export const modifyPostVoteScoreAsync = (postId, modification) => {
 	return (dispatch, getState, api) => {
 		handleAsyncResponse(
@@ -37,6 +59,20 @@ export const modifyPostVoteScoreAsync = (postId, modification) => {
 export const addPost = post => {
 	return {
 		type: ADD_POST,
+		post,
+	}
+}
+
+export const deletePost = post => {
+	return {
+		type: DELETE_POST,
+		post,
+	}
+}
+
+export const updatePost = post => {
+	return {
+		type: UPDATE_POST,
 		post,
 	}
 }
