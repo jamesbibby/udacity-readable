@@ -128,9 +128,21 @@ li.flex-submit {
 }
 
 .commentForm {
-	padding-right: 100px;
 	margin: 0 auto;
+	margin-top: 10px;
+	flex-direction: row;
+	display: flex;
+	border: 1px solid;
 	width: 60%;
+}
+
+.commentListForm {
+	margin: 0 auto;
+	margin-top: 10px;
+	flex-direction: row;
+	display: flex;
+	border: 1px solid;
+	width: 95%;
 }
 
 div.postTitle {

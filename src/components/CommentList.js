@@ -63,6 +63,7 @@ class CommentList extends Component {
 					<CommentEdit
 						postId={post.id}
 						newComment={true}
+						containerClassName="commentForm"
 						addComment={(postId, body, author) => {
 							this.hideCreateComment()
 							return addComment(postId, body, author)
@@ -75,14 +76,27 @@ class CommentList extends Component {
 						comments.map(
 							comment =>
 								comment.editing ? (
-									<CommentEdit
-										key={comment.id}
-										postId={post.id}
-										comment={comment}
-										saveComment={saveComment}
-										cancelEditing={() =>
-											this.props.editComment(post.id, comment.id, false)}
-									/>
+									<div
+										className="commentBlock"
+										style={{
+											display: 'flex',
+											justifyContent: 'space-between',
+											alignContent: 'stretch',
+											flex: '1 100%',
+											borderBottom: '1px solid',
+											paddingBottom: '10px',
+										}}
+									>
+										<CommentEdit
+											key={comment.id}
+											postId={post.id}
+											comment={comment}
+											saveComment={saveComment}
+											containerClassName="commentListForm"
+											cancelEditing={() =>
+												this.props.editComment(post.id, comment.id, false)}
+										/>
+									</div>
 								) : (
 									<Comment
 										key={comment.id}

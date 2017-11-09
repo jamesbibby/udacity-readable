@@ -29,7 +29,7 @@ class CommentForm extends Component {
 
 	render() {
 		return (
-			<div className="commentForm">
+			<div className={this.props.containerClassName}>
 				<ul className="flex-outer">
 					{this.props.newComment && (
 						<li>
@@ -44,7 +44,7 @@ class CommentForm extends Component {
 					)}
 					<li>
 						<label htmlFor="body" style={{ valign: 'top' }}>
-							Comment:
+							Body:
 						</label>
 						<textarea
 							name="body"
@@ -52,29 +52,23 @@ class CommentForm extends Component {
 							onChange={this.handleChange}
 						/>
 					</li>
-					<li className="flex-final">
-						<p />
-						<p />
-						<div>
-							<button
-								onClick={
-									this.props.newComment
-										? this.props.hideCreateComment
-										: this.props.cancelEditing
-								}
-							>
-								<Close className="icon" />
-								Cancel
-							</button>
-						</div>
-						<div>
-							<button onClick={this.handleSubmit}>
-								<Check className="icon" />
-								Save
-							</button>
-						</div>
+					<li className="flex-submit">
+						<button onClick={this.handleSubmit}>
+							<Check className="icon" />
+							Save
+						</button>
 					</li>
 				</ul>
+				<span className="flash-icon-close">
+					<Close
+						className="icon"
+						onClick={
+							this.props.newComment
+								? this.props.hideCreateComment
+								: this.props.cancelEditing
+						}
+					/>
+				</span>
 			</div>
 		)
 	}
