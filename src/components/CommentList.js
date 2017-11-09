@@ -10,7 +10,7 @@ import {
 } from '../actions'
 import Plus from 'react-icons/lib/fa/plus'
 import Comment from './Comment'
-import CommentEdit from './CommentEdit'
+import CommentForm from './CommentForm'
 
 class CommentList extends Component {
 	constructor(props) {
@@ -60,7 +60,7 @@ class CommentList extends Component {
 					</div>
 				</div>
 				{this.state.showCreateComment && (
-					<CommentEdit
+					<CommentForm
 						postId={post.id}
 						newComment={true}
 						containerClassName="commentForm"
@@ -87,7 +87,7 @@ class CommentList extends Component {
 											paddingBottom: '10px',
 										}}
 									>
-										<CommentEdit
+										<CommentForm
 											key={comment.id}
 											postId={post.id}
 											comment={comment}
