@@ -19,3 +19,6 @@ yarn start
 npm i
 npm start
 ```
+
+## Backend server
+This application expects a backend server available at http://localhost:3001 however this endpoint can be overriden by setting the ENDPOINT environment variable.  The source code for the server can be found at https://github.com/udacity/reactnd-project-readable-starter/  

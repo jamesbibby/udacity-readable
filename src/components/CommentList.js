@@ -76,27 +76,15 @@ class CommentList extends Component {
 						comments.map(
 							comment =>
 								comment.editing ? (
-									<div
-										className="commentBlock"
-										style={{
-											display: 'flex',
-											justifyContent: 'space-between',
-											alignContent: 'stretch',
-											flex: '1 100%',
-											borderBottom: '1px solid',
-											paddingBottom: '10px',
-										}}
-									>
-										<CommentForm
-											key={comment.id}
-											postId={post.id}
-											comment={comment}
-											saveComment={saveComment}
-											containerClassName="commentListForm"
-											cancelEditing={() =>
-												this.props.editComment(post.id, comment.id, false)}
-										/>
-									</div>
+									<CommentForm
+										key={comment.id}
+										postId={post.id}
+										comment={comment}
+										saveComment={saveComment}
+										containerClassName="commentBlock"
+										cancelEditing={() =>
+											this.props.editComment(post.id, comment.id, false)}
+									/>
 								) : (
 									<Comment
 										key={comment.id}

@@ -41,54 +41,56 @@ class CommentForm extends Component {
 	render() {
 		return (
 			<div className={this.props.containerClassName}>
-				{this.state.errors && (
-					<ul style={{ WebkitMarginBefore: '0px', color: 'red' }}>
-						{this.state.errors.map((error, ix) => (
-							<li key={`error_${ix}`}>{error}</li>
-						))}
-					</ul>
-				)}
-				<div style={{ flexDirection: 'row', display: 'flex', width: '100%' }}>
-					<ul className="flex-outer">
-						{this.props.newComment && (
+				<div className="commentListForm">
+					{this.state.errors && (
+						<ul style={{ WebkitMarginBefore: '0px', color: 'red' }}>
+							{this.state.errors.map((error, ix) => (
+								<li key={`error_${ix}`}>{error}</li>
+							))}
+						</ul>
+					)}
+					<div style={{ flexDirection: 'row', display: 'flex', width: '100%' }}>
+						<ul className="flex-outer">
+							{this.props.newComment && (
+								<li>
+									<label htmlFor="author">Author: </label>
+									<input
+										type="text"
+										name="author"
+										value={this.state.author}
+										onChange={this.handleChange}
+									/>
+								</li>
+							)}
 							<li>
-								<label htmlFor="author">Author: </label>
-								<input
-									type="text"
-									name="author"
-									value={this.state.author}
+								<label htmlFor="body" style={{ valign: 'top' }}>
+									Body:
+								</label>
+								<textarea
+									name="body"
+									value={this.state.body}
 									onChange={this.handleChange}
 								/>
 							</li>
-						)}
-						<li>
-							<label htmlFor="body" style={{ valign: 'top' }}>
-								Body:
-							</label>
-							<textarea
-								name="body"
-								value={this.state.body}
-								onChange={this.handleChange}
-							/>
-						</li>
-						<li className="flex-submit">
-							<button onClick={this.handleSubmit}>
-								<Check className="icon" />
-								Save
-							</button>
-						</li>
-					</ul>
+							<li className="flex-submit">
+								<button onClick={this.handleSubmit}>
+									<Check className="icon" />
+									Save
+								</button>
+							</li>
+						</ul>
+					</div>
+					<span className="flash-icon-close">
+						<Close
+							className="icon"
+							onClick={
+								this.props.newComment
+									? this.props.hideCreateComment
+									: this.props.cancelEditing
+							}
+						/>
+					</span>
 				</div>
-				<span className="flash-icon-close">
-					<Close
-						className="icon"
-						onClick={
-							this.props.newComment
-								? this.props.hideCreateComment
-								: this.props.cancelEditing
-						}
-					/>
-				</span>
 			</div>
 		)
 	}

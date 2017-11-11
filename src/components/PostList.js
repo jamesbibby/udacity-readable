@@ -80,10 +80,12 @@ class PostList extends Component {
 											/>
 											<div className="mainPost">
 												<div className="postListTitle">
-													<Link to={`/posts/${post.id}`}>{post.title}</Link>
+													<Link to={`/${post.category}/${post.id}`}>
+														{post.title}
+													</Link>
 												</div>
 												<div className="postListBody">{post.body}</div>
-												<div className="postListAuthor">
+												<div className="authorBlock">
 													submitted by ({post.author}) at{' '}
 													{new Date(post.timestamp).toLocaleString()}
 												</div>

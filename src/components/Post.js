@@ -83,10 +83,7 @@ class Post extends Component {
 								}}
 							>
 								<div className="postTitle">{post.title}</div>
-								<div
-									className="postAuthor"
-									style={{ color: 'grey', fontSize: 'small' }}
-								>
+								<div className="authorBlock ">
 									submitted by ({post.author}) at{' '}
 									{new Date(post.timestamp).toLocaleString()}
 								</div>

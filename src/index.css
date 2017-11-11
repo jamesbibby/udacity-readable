@@ -56,8 +56,9 @@ div {
 
 .commentBody {
 	display: flex;
-	flex-direction: column;
-	justify-content: flex-start;
+	flex-direction: row;
+	justify-content: space-between;
+	flex: 4 0px;
 }
 
 .icon {
@@ -181,4 +182,10 @@ div.voteScore {
 
 div.commentVoteScore {
 	padding: 0 7px;
+}
+
+.authorBlock {
+	color: grey;
+	font-size: small;
+	padding-right: 10px;
 }

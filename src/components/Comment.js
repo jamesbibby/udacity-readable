@@ -4,33 +4,16 @@ import Pencil from 'react-icons/lib/fa/pencil'
 import VoteScore from './VoteScore'
 
 const Comment = props => (
-	<div
-		className="commentBlock"
-		style={{
-			display: 'flex',
-			justifyContent: 'space-between',
-			alignContent: 'stretch',
-			flex: '1 100%',
-			borderBottom: '1px solid',
-			paddingBottom: '10px',
-		}}
-	>
+	<div className="commentBlock">
 		<VoteScore
 			className="commentVoteScore"
 			entityId={props.comment.id}
 			voteScore={props.comment.voteScore}
 			modifyVoteScore={props.modifyCommentVoteScore}
 		/>
-		<div
-			className="commentBody"
-			style={{
-				flexDirection: 'row',
-				justifyContent: 'space-between',
-				flex: '4 0px',
-			}}
-		>
+		<div className="commentBody">
 			{props.comment.body}
-			<span style={{ color: 'grey', fontSize: 'small', paddingRight: '10px' }}>
+			<span className="authorBlock">
 				{props.comment.author} at ({new Date(
 					props.comment.timestamp
 				).toLocaleString()})
