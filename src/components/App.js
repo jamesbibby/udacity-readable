@@ -45,12 +45,12 @@ class App extends Component {
 						</div>
 						<div className="categoryMenu">
 							<Route exact path="/" component={CategoryList} />
-							<Route path="/categories/:categoryId" component={CategoryList} />
+							<Route exact path="/:categoryId" component={CategoryList} />
 						</div>
 					</div>
 					<div>
 						<Route exact path="/" component={PostList} />
-						<Route path="/categories/:categoryId" component={PostList} />
+						<Route exact path="/:categoryId" component={PostList} />
 						<Route path="/:categoryId/:postId" component={Post} />
 					</div>
 				</div>

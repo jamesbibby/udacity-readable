@@ -159,7 +159,10 @@ div.postAuthor {
 }
 
 div.mainPost {
-	display: block;
+	display: flex;
+	justify-content: space-between;
+	flex-direction: row-reverse;
+	width: 100%;
 }
 
 div.voteCol {

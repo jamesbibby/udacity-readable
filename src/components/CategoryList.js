@@ -21,7 +21,7 @@ const CategoryList = props => {
 							category.path
 								? 'active'
 								: ''}`}
-							onClick={() => props.history.push(`/categories/${category.path}`)}
+							onClick={() => props.history.push(`/${category.path}`)}
 						>
 							{category.name}
 						</button>

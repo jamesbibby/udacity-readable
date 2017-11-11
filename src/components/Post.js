@@ -41,6 +41,7 @@ class Post extends Component {
 					submitLabel="Save"
 					updatePost={updatePost}
 				/>
+				<CommentList post={post} />
 			</div>
 		) : (
 			<div className="postDetail">
